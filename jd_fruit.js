@@ -1216,12 +1216,12 @@ function readShareCode() {
         if (err) {
           console.log(`${JSON.stringify(err)}`)
           console.log(`${$.name} API请求失败，请检查网路重试`)
-        } else {
-          if (data) {
-            console.log(`随机取个${randomCount}码放到您固定的互助码后面`)
-            data = JSON.parse(data);
-          }
-        }
+        }// else {
+          //if (data) {
+          //  console.log(`随机取个${randomCount}码放到您固定的互助码后面`)
+          //  data = JSON.parse(data);
+         // }
+       // }
       } catch (e) {
         $.logErr(e, resp)
       } finally {
@@ -1236,16 +1236,16 @@ function shareCodesFormat() {
     newShareCodes = [];
     if (jdFruitShareArr[$.index - 1]) {
       newShareCodes = jdFruitShareArr[$.index - 1].split('@');
-    } //else {
-      //console.log(`由于您第${$.index}个京东账号未提供shareCode,将采纳本脚本自带的助力码\n`)
-      //const tempIndex = $.index > shareCodes.length ? (shareCodes.length - 1) : ($.index - 1);
-      //newShareCodes = shareCodes[tempIndex].split('@');
-    //}
+    } else {
+      console.log(`由于您第${$.index}个京东账号未提供shareCode,将采纳本脚本自带的助力码\n`)
+      const tempIndex = $.index > shareCodes.length ? (shareCodes.length - 1) : ($.index - 1);
+      newShareCodes = shareCodes[tempIndex].split('@');
+    }
     const readShareCodeRes = await readShareCode();
-    //if (readShareCodeRes && readShareCodeRes.code === 200) {
-      // newShareCodes = newShareCodes.concat(readShareCodeRes.data || []);
-      //newShareCodes = [...new Set([...newShareCodes, ...(readShareCodeRes.data || [])])];
-    //}
+    if (readShareCodeRes && readShareCodeRes.code === 200) {
+      newShareCodes = newShareCodes.concat(readShareCodeRes.data || []);
+      newShareCodes = [...new Set([...newShareCodes, ...(readShareCodeRes.data || [])])];
+    }
     console.log(`第${$.index}个京东账号将要助力的好友${JSON.stringify(newShareCodes)}`)
     resolve();
   })
