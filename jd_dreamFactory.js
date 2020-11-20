@@ -1,7 +1,4 @@
-/*
-京东京喜工厂
-cron 15 * * * * https://raw.githubusercontent.com/lxk0301/jd_scripts/master/jd_dreamFactory.js
- */
+
 
 
 const $ = new Env('京喜工厂');
@@ -11,7 +8,7 @@ let ele, factoryId, productionId;
 
 let message = '', subTitle = '', option = {};
 const notify = $.isNode() ? require('./sendNotify') : '';
-let jdNotify = false;//是否关闭通知，false打开通知推送，true关闭通知推送
+let jdNotify = true;//是否关闭通知，false打开通知推送，true关闭通知推送
 
 let cookiesArr = [], cookie = '';
 const jdCookieNode = $.isNode() ? require('./jdCookie.js') : '';
