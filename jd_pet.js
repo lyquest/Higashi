@@ -1,4 +1,4 @@
-﻿/*
+/*
 /*
 东东萌宠 更新地址： https://raw.githubusercontent.com/lxk0301/jd_scripts/master/jd_pet.js
 更新时间：2020-11-21
@@ -31,9 +31,11 @@ let cookiesArr = [], cookie = '', jdPetShareArr = [], isBox = false, notify, new
 //下面给出两个账号的填写示例（iOS只支持2个京东账号）
 let shareCodes = [ // IOS本地脚本用户这个列表填入你要助力的好友的shareCode
    //账号一的好友shareCode,不同好友的shareCode中间用@符号隔开
-  'MTAxODc2NTEzNTAwMDAwMDAwMDAwMzA3Nw==@MTAxODc2NTE0NzAwMDAwMDAwMDAwNTQ3OQ==@MTAxODc2NTEzMzAwMDAwMDAxMDQzMzM2MQ==@MTE1NDUyMjEwMDAwMDAwMzk5NDg3MTk=',
+   //离-梦-妃
+  'MTAxODc2NTE0NzAwMDAwMDAwMDAwNTQ3OQ==@MTE1NDUyMjEwMDAwMDAwMzk5NDg3MTk=@MTE1NDUyMjEwMDAwMDAwNDAzNTc5NjE=',
   //账号二的好友shareCode,不同好友的shareCode中间用@符号隔开
-  'MTAxODc2NTEzNTAwMDAwMDAwMDAwMzA3Nw==@MTAxODc2NTE0NzAwMDAwMDAwMDAwNTQ3OQ==@MTAxODc2NTEzMzAwMDAwMDAxMDQzMzM2MQ==',
+  //ly-离-羊-妃
+  'MTAxODc2NTEzNTAwMDAwMDAwMDAwMzA3Nw==@MTAxODc2NTE0NzAwMDAwMDAwMDAwNTQ3OQ==@MTAxODc2NTEzMzAwMDAwMDAxMDQzMzM2MQ==@MTE1NDUyMjEwMDAwMDAwNDAzNTc5NjE=',
 ]
 let message = '', subTitle = '', option = {};
 let jdNotify = false;//是否关闭通知，false打开通知推送，true关闭通知推送
@@ -126,7 +128,7 @@ async function jdPet() {
     await feedPetsAgain();//再次投食
     await energyCollect();//收集好感度
     await showMsg();
-    console.log('全部任务完成, 明天见~');
+    console.log('全部任务完成, 如果帮助到您可以点下🌟STAR鼓励我一下, 明天见~');
   } else if (initPetTownRes.code === '0'){
     console.log(`初始化萌宠失败:  ${initPetTownRes.message}`);
   }
