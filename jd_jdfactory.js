@@ -47,7 +47,7 @@ if ($.isNode()) {
 }
 let wantProduct = ``;//心仪商品名称
 const JD_API_HOST = 'https://api.m.jd.com/client.action';
-const inviteCodes = [`P04z54XCjVWnYaS5u2ak7ZCdan1Bdd2GGiWvC6_uERj`, 'P04z54XCjVWnYaS5m9cZ2ariXVJwHf0bgkG7Uo'];
+const inviteCodes = [`P04z54XCjVWnYaS5nBnDmKr33lCkght8WGRXg`, 'P04z54XCjVWnYaS5nBnDmKr33lCkght8WGRXg'];
 !(async () => {
   await requireConfig();
   if (!cookiesArr[0]) {
@@ -547,12 +547,12 @@ function readShareCode() {
         if (err) {
           console.log(`${JSON.stringify(err)}`)
           console.log(`${$.name} API请求失败，请检查网路重试`)
-        } else {
-          if (data) {
-            console.log(`随机取个${randomCount}码放到您固定的互助码后面`)
-            data = JSON.parse(data);
-          }
-        }
+        } //else {
+          //if (data) {
+          //  console.log(`随机取个${randomCount}码放到您固定的互助码后面`)
+          //  data = JSON.parse(data);
+         // }
+       // }
       } catch (e) {
         $.logErr(e, resp)
       } finally {
