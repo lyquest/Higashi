@@ -87,7 +87,7 @@ const inviteCodes = [`P04z54XCjVWnYaS5nBnDmKr33lCkght8WGRXg`, 'P04z54XCjVWnYaS5n
     })
 async function jdFactory() {
   await jdfactory_getHomeData();
-  //await helpFriends();
+  await helpFriends();
   // $.newUser !==1 && $.haveProduct === 2，老用户但未选购商品
   // $.newUser === 1新用户
   if ($.newUser === 1) return
