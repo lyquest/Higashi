@@ -11,7 +11,7 @@ const notify = $.isNode() ? require('./sendNotify') : '';
 let jdNotify = true;//是否关闭通知，false打开通知推送，true关闭通知推送
 
 let cookiesArr = [], cookie = '';
-//const inviteCodes = ['RsjljNAAYotorAKjJjTGHg=='];
+const inviteCodes = ['RsjljNAAYotorAKjJjTGHg=='];
 const jdCookieNode = $.isNode() ? require('./jdCookie.js') : '';
 if ($.isNode()) {
   Object.keys(jdCookieNode).forEach((item) => {
