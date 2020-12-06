@@ -31,7 +31,7 @@ const notify = $.isNode() ? require('./sendNotify') : '';
 let jdNotify = true;//是否关闭通知，false打开通知推送，true关闭通知推送
 const randomCount = 3;
 let cookiesArr = [], cookie = '', message = '';
-const inviteCodes = ['qSDHMwUOz7onHcMyaju4KmdSXWf0dlv7LVnTt1Wzemo=@iuGNoGYvk9YdEImUAz25Wyzm7oeggrm0JSIYgZdHJGI=', 'iuGNoGYvk9YdEImUAz25Wyzm7oeggrm0JSIYgZdHJGI='];
+//const inviteCodes = ['qSDHMwUOz7onHcMyaju4KmdSXWf0dlv7LVnTt1Wzemo='];
 const jdCookieNode = $.isNode() ? require('./jdCookie.js') : '';
 if ($.isNode()) {
   Object.keys(jdCookieNode).forEach((item) => {
@@ -83,7 +83,7 @@ if ($.isNode()) {
 
 async function jdJxStory() {
   await userInfo()
-  await helpFriends()
+  //await helpFriends()
   await sign()
   await taskList()
   for(let i =0;i<Math.trunc($.currentMoneyNum/20000);++i){
@@ -492,12 +492,12 @@ function readShareCode() {
         if (err) {
           console.log(`${JSON.stringify(err)}`)
           console.log(`${$.name} API请求失败，请检查网路重试`)
-        } else {
-          if (data) {
-            console.log(`随机取${randomCount}个码放到您固定的互助码后面`)
-            data = JSON.parse(data);
-          }
-        }
+        } //else {
+         // if (data) {
+          //  console.log(`随机取${randomCount}个码放到您固定的互助码后面`)
+          //  data = JSON.parse(data);
+         // }
+       // }
       } catch (e) {
         $.logErr(e, resp)
       } finally {
