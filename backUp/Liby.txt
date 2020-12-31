@@ -386,6 +386,7 @@ host, ws.ksmobile.net, AdBlock
 # > KuGou and Kuwo
 host, ads.service.kugou.com, AdBlock
 host, zhuanjistatic.kugou.com, AdBlock
+host, m2kgshow.kugou.com, AdBlock
 host, zhuanjistaticretry.kugou.com, AdBlock
 host, adserviceretry.kugou.com, AdBlock
 host, adsfile.bssdlbig.kugou.com, AdBlock
