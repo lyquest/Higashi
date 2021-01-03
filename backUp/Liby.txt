@@ -392,7 +392,7 @@ host, acsing2.kugou.com, AdBlock
 host, zhuanjistaticretry.kugou.com, AdBlock
 host, adserviceretry.kugou.com, AdBlock
 host, adsfile.bssdlbig.kugou.com, AdBlock
-host, nbcollect.kugou.com, AdBlock
+host,nbcollect.kugou.com, AdBlock
 host,dynamicentry.kugou.com, AdBlock
 host,serveraddr.service.kugou.com, AdBlock
 host,s2kgshow.kugou.com, AdBlock
