@@ -392,6 +392,22 @@ host, acsing2.kugou.com, AdBlock
 host, zhuanjistaticretry.kugou.com, AdBlock
 host, adserviceretry.kugou.com, AdBlock
 host, adsfile.bssdlbig.kugou.com, AdBlock
+host,nhost,bcollect.kugou.com, AdBlock
+host,dynamicentry.kugou.com, AdBlock
+host,serveraddr.service.kugou.com, AdBlock
+host,s2kgshow.kugou.com, AdBlock
+host,exceptionlog.kugou.com, AdBlock
+host,acshow.kugou.com, AdBlock
+host,songlist.kugou.com, AdBlock
+host,config.mobile.kugou.com, AdBlock
+host,service2.fanxing.kugou.com, AdBlock
+host,adsfileretry.service.kugou.com, AdBlock
+host,mobilecdngz.kugou.com, AdBlock
+host,tracker.kugou.com, AdBlock
+host,online.kugou.com, AdBlock
+host,song.mobile.kugou.com, AdBlock
+host,tools.mobile.kugou.com, AdBlock
+host,u.mobile.kugou.com, AdBlock
 host, g.koowo.com, AdBlock
 host, kgmobilestat.kugou.com, AdBlock
 host, kgmobilestatbak.kugou.com, AdBlock
