@@ -32,12 +32,17 @@ if ($.isNode()) {
   })
   if (process.env.JD_DEBUG && process.env.JD_DEBUG === 'false') console.log = () => {};
 } else {
-  cookiesArr.push($.getdata('CookieJD'));
-  cookiesArr.push($.getdata('CookieJD2'));
+  let cookiesData = $.getdata('CookiesJD') || "[]";
+  cookiesData = jsonParse(cookiesData);
+  cookiesArr = cookiesData.map(item => item.cookie);
+  cookiesArr.reverse();
+  cookiesArr.push(...[$.getdata('CookieJD2'), $.getdata('CookieJD')]);
+  cookiesArr.reverse();
+  cookiesArr = cookiesArr.filter(item => item !== "" && item !== null && item !== undefined);
 }
 let message = '', subTitle = '';
 let FEED_NUM = ($.getdata('joyFeedCount') * 1) || 10;   //每次喂养数量 [10,20,40,80]
-let teamLevel = 2;//参加多少人的赛跑比赛，默认是双人赛跑，可选2，10,50。其他不可选，其中2代表参加双人PK赛，10代表参加10人突围赛，50代表参加50人挑战赛
+let teamLevel = `2`;//参加多少人的赛跑比赛，默认是双人赛跑，可选2，10,50。其他不可选，其中2代表参加双人PK赛，10代表参加10人突围赛，50代表参加50人挑战赛，如若想设置不同账号参加不同类别的比赛则用&区分即可(如：`2&10&50`)
 //是否参加宠汪汪双人赛跑（据目前观察，参加双人赛跑不消耗狗粮,如需参加其他多人赛跑，请关闭）
 // 默认 'true' 参加双人赛跑，如需关闭 ，请改成 'false';
 let joyRunFlag = true;
@@ -46,7 +51,7 @@ const JD_API_HOST = 'https://jdjoy.jd.com/pet'
 const weAppUrl = 'https://draw.jdfcloud.com//pet';
 !(async () => {
   if (!cookiesArr[0]) {
-    $.msg($.name, '【提示】请先获取京东账号一cookie\n直接使用NobyDa的京东签到获取', 'https://bean.m.jd.com/', {"open-url": "https://bean.m.jd.com/"});
+    $.msg($.name, '【提示】请先获取京东账号一cookie\n直接使用NobyDa的京东签到获取', 'https://bean.m.jd.com/bean/signIndex.action', {"open-url": "https://bean.m.jd.com/bean/signIndex.action"});
     return;
   }
   for (let i = 0; i < cookiesArr.length; i++) {
@@ -59,12 +64,10 @@ const weAppUrl = 'https://draw.jdfcloud.com//pet';
       await TotalBean();
       console.log(`\n开始【京东账号${$.index}】${$.nickName || $.UserName}\n`);
       if (!$.isLogin) {
-        $.msg($.name, `【提示】cookie已失效`, `京东账号${$.index} ${$.nickName || $.UserName}\n请重新登录获取\nhttps://bean.m.jd.com/`, {"open-url": "https://bean.m.jd.com/"});
+        $.msg($.name, `【提示】cookie已失效`, `京东账号${$.index} ${$.nickName || $.UserName}\n请重新登录获取\nhttps://bean.m.jd.com/bean/signIndex.action`, {"open-url": "https://bean.m.jd.com/bean/signIndex.action"});
 
         if ($.isNode()) {
           await notify.sendNotify(`${$.name}cookie已失效 - ${$.UserName}`, `京东账号${$.index} ${$.UserName}\n请重新登录获取cookie`);
-        } else {
-          $.setdata('', `CookieJD${i ? i + 1 : "" }`);//cookie失效，故清空cookie。$.setdata('', `CookieJD${i ? i + 1 : "" }`);//cookie失效，故清空cookie。
         }
         continue
       }
@@ -131,23 +134,26 @@ async function joinTwoPeopleRun() {
     joyRunFlag = process.env.JOY_RUN_FLAG;
   }
   if (`${joyRunFlag}` === 'true') {
-    console.log(`\n===========以下是双人赛跑信息========\n`)
+    let teamLevelTemp = [];
+    teamLevelTemp = $.isNode() ? (process.env.JOY_TEAM_LEVEL ? process.env.JOY_TEAM_LEVEL.split('&') : teamLevel.split('&')) : ($.getdata('JOY_TEAM_LEVEL') ? $.getdata('JOY_TEAM_LEVEL').split('&') : teamLevel.split('&'));
+    teamLevelTemp = teamLevelTemp[$.index - 1] ? teamLevelTemp[$.index - 1] : 2;
     await getPetRace();
+    console.log(`\n===以下是京东账号${$.index} ${$.nickName} ${$.petRaceResult.data.teamLimitCount || teamLevelTemp}人赛跑信息===\n`)
     if ($.petRaceResult) {
       let petRaceResult = $.petRaceResult.data.petRaceResult;
-      let raceUsers = $.petRaceResult.data.raceUsers;
+      // let raceUsers = $.petRaceResult.data.raceUsers;
       console.log(`赛跑状态：${petRaceResult}\n`);
       if (petRaceResult === 'not_participate') {
-        teamLevel = $.isNode() ? (process.env.JOY_TEAM_LEVEL ? process.env.JOY_TEAM_LEVEL : teamLevel) : ($.getdata('JOY_TEAM_LEVEL') ? $.getdata('JOY_TEAM_LEVEL') : teamLevel);
-        console.log(`暂未参赛，现在为您参加${teamLevel}人赛跑`);
-        await runMatch(teamLevel * 1);
+        console.log(`暂未参赛，现在为您参加${teamLevelTemp}人赛跑`);
+        await runMatch(teamLevelTemp * 1);
         if ($.runMatchResult.success) {
-          console.log(`${teamLevel}人赛跑参加成功\n`);
-          message += `${teamLevel}人赛跑：成功参加\n`;
-          await getPetRace();
-          petRaceResult = $.petRaceResult.data.petRaceResult;
-          raceUsers = $.petRaceResult.data.raceUsers;
-          // console.log(`参赛后的状态：${petRaceResult}`)
+          await getWinCoin();
+          console.log(`${$.getWinCoinRes.data.teamLimitCount || teamLevelTemp}人赛跑参加成功\n`);
+          message += `${$.getWinCoinRes.data.teamLimitCount || teamLevelTemp}人赛跑：成功参加\n`;
+          // if ($.getWinCoinRes.data['supplyOrder']) await energySupplyStation($.getWinCoinRes.data['supplyOrder']);
+          await energySupplyStation('2');
+          // petRaceResult = $.petRaceResult.data.petRaceResult;
+          // await getRankList();
           console.log(`双人赛跑助力请自己手动去邀请好友，脚本不带赛跑助力功能\n`);
         }
       }
@@ -167,30 +173,33 @@ async function joinTwoPeopleRun() {
         await receiveJoyRunAward();
         console.log(`领取赛跑奖励结果：${JSON.stringify($.receiveJoyRunAwardRes)}`)
         if ($.receiveJoyRunAwardRes.success) {
-          $.msg($.name, '', `【京东账号${$.index}】${$.nickName}\n太棒了,${teamLevel}人赛跑取得获胜\n恭喜您已获得${winCoin}积分奖励`);
-          await notify.sendNotify(`${$.name} - 京东账号${$.index} - ${$.nickName}`, `京东账号${$.index}${$.nickName}\n${teamLevel}人赛跑取得获胜\n恭喜您已获得${winCoin}积分奖励`)
+          $.msg($.name, '', `【京东账号${$.index}】${$.nickName}\n太棒了，${$.name}赛跑取得获胜\n恭喜您已获得${winCoin}积分奖励`);
+          if ($.isNode()) await notify.sendNotify(`${$.name} - 京东账号${$.index} - ${$.nickName}`, `京东账号${$.index}${$.nickName}\n太棒了，${$.name}赛跑取得获胜\n恭喜您已获得${winCoin}积分奖励`)
         }
       }
       if (petRaceResult === 'participate') {
-        if(raceUsers) {
-          for (let index =0; index < raceUsers.length; index++) {
-            if (raceUsers[index].myself) {
-              console.log(`您当前里程：${raceUsers[index].distance}KM\n`);
-              message += `您当前里程：${raceUsers[index].distance}km\n`;
+        // if ($.getWinCoinRes.data['supplyOrder']) await energySupplyStation($.getWinCoinRes.data['supplyOrder']);
+        await energySupplyStation('2');
+        await getRankList();
+        if($.raceUsers && $.raceUsers.length > 0) {
+          for (let index = 0; index < $.raceUsers.length; index++) {
+            if (index === 0) {
+              console.log(`您当前里程：${$.raceUsers[index].distance}KM\n当前排名:第${$.raceUsers[index].rank}名\n将获得积分:${$.raceUsers[index].coin}\n`);
+              // message += `您当前里程：${$.raceUsers[index].distance}km\n`;
             } else {
-              console.log(`对手当前里程：${raceUsers[index].distance}KM\n`);
-              message += `对手当前里程：${raceUsers[index].distance}km\n`;
+              console.log(`对手 ${$.raceUsers[index].nickName} 当前里程：${$.raceUsers[index].distance}KM`);
+              // message += `对手当前里程：${$.raceUsers[index].distance}km\n`;
             }
           }
         }
-        console.log('今日已参赛，下面显示应援团信息\n');
+        console.log('\n今日已参赛，下面显示应援团信息');
         await getBackupInfo();
         if ($.getBackupInfoResult.success) {
           const { currentNickName, totalMembers, totalDistance, backupList } = $.getBackupInfoResult.data;
           console.log(`${currentNickName}的应援团信息如下\n团员：${totalMembers}个\n团员助力的里程数：${totalDistance}\n`);
           if (backupList && backupList.length > 0) {
             for (let item of backupList) {
-              console.log(`${item.nickName}为您助力${item.distance}km\n`);
+              console.log(`${item.nickName}为您助力${item.distance}km`);
             }
           } else {
             console.log(`暂无好友为您助力赛跑，如需助力，请手动去邀请好友助力\n`);
@@ -468,16 +477,16 @@ function followShop(shopId) {
 }
 function enterRoom() {
   return new Promise(resolve => {
-    const url = `${weAppUrl}/enterRoom?reqSource=weapp`;
+    const url = `${weAppUrl}/enterRoom/h5?reqSource=weapp&invitePin=&openId=`;
     const host = `draw.jdfcloud.com`;
     const reqSource = 'weapp';
-    $.get(taskUrl(url, host, reqSource), (err, resp, data) => {
+    $.post({...taskUrl(url, host, reqSource),body:'{}'}, (err, resp, data) => {
       try {
         if (err) {
           console.log('\n京东宠汪汪: API查询请求失败 ‼️‼️')
         } else {
           // console.log('JSON.parse(data)', JSON.parse(data))
-         
+
           $.roomData = JSON.parse(data);
 
           console.log(`现有狗粮: ${$.roomData.data.petFood}\n`)
@@ -610,8 +619,33 @@ function getPetRace() {
     })
   })
 }
+//查询赛跑排行榜
+function getRankList() {
+  return new Promise(resolve => {
+    const url = `${JD_API_HOST}/combat/getRankList`;
+    $.raceUsers = [];
+    $.get(taskUrl(url, `jdjoy.jd.com`, 'h5'), (err, resp, data) => {
+      try {
+        if (err) {
+          console.log('\n京东宠汪汪: API查询请求失败 ‼️‼️')
+        } else {
+          // console.log('查询赛跑信息API',(data))
+          data = JSON.parse(data);
+          if (data.success) {
+            $.raceUsers = data.datas;
+          }
+        }
+      } catch (e) {
+        $.logErr(e, resp);
+      } finally {
+        resolve();
+      }
+    })
+  })
+}
 //参加赛跑API
 function runMatch(teamLevel, timeout = 5000) {
+  if (teamLevel === 10 || teamLevel === 50) timeout = 60000;
   console.log(`正在参赛中，请稍等${timeout / 1000}秒，以防多个账号匹配到统一赛场\n`)
   return new Promise(async resolve => {
     await $.wait(timeout);
@@ -704,6 +738,50 @@ function receiveJoyRunAward() {
     })
   })
 }
+//能力补给站
+async function energySupplyStation(showOrder) {
+  let status;
+  await getSupplyInfo(showOrder);
+  if ($.getSupplyInfoRes && $.getSupplyInfoRes.success) {
+    if ($.getSupplyInfoRes.data) {
+      const { marketList } = $.getSupplyInfoRes.data;
+      for (let list of marketList) {
+        if (!list['status']) {
+          await scanMarket('combat/supply', { showOrder, 'supplyType': 'scan_market', 'taskInfo': list.marketLink || list['marketLinkH5'], 'reqSource': 'weapp' });
+          await getSupplyInfo(showOrder);
+        } else {
+          $.log(`能力补给站 ${$.getSupplyInfoRes.data.addDistance}km里程 已领取\n`);
+          status = list['status'];
+        }
+      }
+      if (!status) {
+        await energySupplyStation(showOrder);
+      }
+    }
+  }
+}
+function getSupplyInfo(showOrder) {
+  return new Promise(resolve => {
+    const url = `${weAppUrl}/combat/getSupplyInfo?showOrder=${showOrder}`;
+    $.get(taskUrl(url, 'draw.jdfcloud.com', `weapp`), (err, resp, data) => {
+      try {
+        if (err) {
+          console.log('\n京东宠汪汪: API查询请求失败 ‼️‼️')
+        } else {
+          // console.log('查询应援团信息API',(data))
+          // $.appGetPetTaskConfigRes = JSON.parse(data);
+          if (data) {
+            $.getSupplyInfoRes = JSON.parse(data);
+          }
+        }
+      } catch (e) {
+        $.logErr(e, resp);
+      } finally {
+        resolve();
+      }
+    })
+  })
+}
 function showMsg() {
   jdNotify = $.getdata('jdJoyNotify') ? $.getdata('jdJoyNotify') : jdNotify;
   if (!jdNotify || jdNotify === 'false') {
@@ -781,6 +859,17 @@ function taskPostUrl(url, body, reqSource, Host, ContentType) {
       'Referer': 'https://jdjoy.jd.com/pet/index',
       'Accept-Language': 'zh-cn',
       'Accept-Encoding': 'gzip, deflate, br',
+    }
+  }
+}
+function jsonParse(str) {
+  if (typeof str == "string") {
+    try {
+      return JSON.parse(str);
+    } catch (e) {
+      console.log(e);
+      $.msg($.name, '', '请勿随意在BoxJs输入框修改内容\n建议通过脚本去获取cookie')
+      return [];
     }
   }
 }
