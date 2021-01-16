@@ -46,7 +46,6 @@ if ($.isNode()) {
 }
 const JD_API_HOST = 'https://api.m.jd.com/client.action';
 const inviteCodes = [
-  `ATlpQnf6SyD0PWjH_i3Uc@Sv_1xRx4b9lTeInWp`,
   `ATlpQnf6SyD0PWjH_i3Uc@Sv_1xRx4b9lTeInWp`
 ]
 !(async () => {
@@ -101,12 +100,12 @@ async function jdWish() {
   $.bean = 0
   $.tuan = null
   $.hasOpen = false
-  await getUserTuanInfo()
-  if (!$.tuan) {
-    await openTuan()
-    if ($.hasOpen) await getUserTuanInfo()
-  }
-  if ($.tuan) $.tuanList.push($.tuan)
+  //await getUserTuanInfo()
+  //if (!$.tuan) {
+  //  await openTuan()
+  //  if ($.hasOpen) await getUserTuanInfo()
+ // }
+ // if ($.tuan) $.tuanList.push($.tuan)
 
   //await helpFriends()
   await getUserInfo()
@@ -363,11 +362,11 @@ function shareCodesFormat() {
     $.newShareCodes = [];
     if ($.shareCodesArr[$.index - 1]) {
       $.newShareCodes = $.shareCodesArr[$.index - 1].split('@');
-    } else {
-      console.log(`由于您第${$.index}个京东账号未提供shareCode,将采纳本脚本自带的助力码\n`)
-      const tempIndex = $.index > inviteCodes.length ? (inviteCodes.length - 1) : ($.index - 1);
-      $.newShareCodes = inviteCodes[tempIndex].split('@');
-    }
+    } //else {
+      //console.log(`由于您第${$.index}个京东账号未提供shareCode,将采纳本脚本自带的助力码\n`)
+      //const tempIndex = $.index > inviteCodes.length ? (inviteCodes.length - 1) : ($.index - 1);
+      //$.newShareCodes = inviteCodes[tempIndex].split('@');
+    //}
     const readShareCodeRes = await readShareCode();
     if (readShareCodeRes && readShareCodeRes.code === 200) {
       $.newShareCodes = [...new Set([...$.newShareCodes, ...(readShareCodeRes.data || [])])];
