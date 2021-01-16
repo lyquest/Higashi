@@ -24,7 +24,7 @@ const $ = new Env('京东赚赚');
 const notify = $.isNode() ? require('./sendNotify') : '';
 //Node.js用户请在jdCookie.js处填写京东ck;
 const jdCookieNode = $.isNode() ? require('./jdCookie.js') : '';
-let helpAuthor=true; // 帮助作者
+let helpAuthor=false; // 帮助作者
 const randomCount = 5;
 let jdNotify = true; // 是否关闭通知，false打开通知推送，true关闭通知推送
 //IOS等用户直接用NobyDa的jd cookie
@@ -52,7 +52,7 @@ const inviteCodes = [
 !(async () => {
   $.tuanList = []
   await requireConfig();
-  if (helpAuthor) await getAuthorShareCode('https://raw.githubusercontent.com/lyquest/Higashi/main/updateTeam/jd_zz.json');
+  //if (helpAuthor) await getAuthorShareCode('https://raw.githubusercontent.com/lyquest/Higashi/main/updateTeam/jd_zz.json');
   if (!cookiesArr[0]) {
     $.msg($.name, '【提示】请先获取京东账号一cookie\n直接使用NobyDa的京东签到获取', 'https://bean.m.jd.com/bean/signIndex.action', {"open-url": "https://bean.m.jd.com/bean/signIndex.action"});
     return;
@@ -84,7 +84,7 @@ const inviteCodes = [
     if (cookiesArr[i]) {
       cookie = cookiesArr[i];
       for (let j = 0; j < $.tuanList.length; ++j) {
-        await helpFriendTuan($.tuanList[j])
+        //await helpFriendTuan($.tuanList[j])
         if(!$.canHelp) break
       }
     }
@@ -108,7 +108,7 @@ async function jdWish() {
   }
   if ($.tuan) $.tuanList.push($.tuan)
 
-  await helpFriends()
+  //await helpFriends()
   await getUserInfo()
   await getTaskList()
   $.nowBean = parseInt($.totalBeanNum)
@@ -340,12 +340,12 @@ function readShareCode() {
         if (err) {
           console.log(`${JSON.stringify(err)}`)
           console.log(`${$.name} API请求失败，请检查网路重试`)
-        } else {
-          if (data) {
-            console.log(`随机取${randomCount}个码放到您固定的互助码后面(不影响已有固定互助)`)
-            data = JSON.parse(data);
-          }
-        }
+        } //else {
+          //if (data) {
+          //  console.log(`随机取${randomCount}个码放到您固定的互助码后面(不影响已有固定互助)`)
+          //  data = JSON.parse(data);
+          //}
+        //}
       } catch (e) {
         $.logErr(e, resp)
       } finally {
