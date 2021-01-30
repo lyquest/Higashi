@@ -1147,6 +1147,7 @@ function shareCodesFormatPk() {
     resolve();
   })
 }
+*/
 
 function requireConfig() {
   return new Promise(resolve => {
@@ -1190,7 +1191,7 @@ function requireConfig() {
     resolve()
   })
 }
-
+/*
 function taskPostUrl(function_id, body = {}, function_id2) {
   let url = `${JD_API_HOST}`;
   if (function_id2) {
