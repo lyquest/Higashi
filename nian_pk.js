@@ -55,7 +55,7 @@ const pkInviteCodes = [
 'IgNWdiLGaPYCeJUfsq18UNi5ln9xEZSPRdOue8Wl3hJTS2SQzU0vulL0fHeULJaIfgqHFd7f_a4@IgNWdiLGaPYCeJUfsq18UNi5ln9xEZSPRdOue8Wl3hLRjZBAJLHzBpcl18AeskNYctp_9w'
 ]
 !(async () => {
-  //await requireConfig();
+  await requireConfig();
   if (!cookiesArr[0]) {
     $.msg($.name, '【提示】请先获取京东账号一cookie\n直接使用NobyDa的京东签到获取', 'https://bean.m.jd.com/bean/signIndex.action', {"open-url": "https://bean.m.jd.com/bean/signIndex.action"});
     return;
@@ -68,7 +68,7 @@ const pkInviteCodes = [
       $.isLogin = true;
       $.nickName = '';
       message = '';
-      await TotalBean();
+      //await TotalBean();
       console.log(`\n******开始【京东账号${$.index}】${$.nickName || $.UserName}*********\n`);
       if (!$.isLogin) {
         $.msg($.name, `【提示】cookie已失效`, `京东账号${$.index} ${$.nickName || $.UserName}\n请重新登录获取\nhttps://bean.m.jd.com/bean/signIndex.action`, {"open-url": "https://bean.m.jd.com/bean/signIndex.action"});
@@ -111,7 +111,7 @@ async function jdNian() {
       if ($.hasGroup) await pkInfo()
       await helpFriendsPK()
     }
-    await $.wait(2000)
+    /*await $.wait(2000)
     await killCouponList()
     await $.wait(2000)
     await map()
@@ -124,7 +124,7 @@ async function jdNian() {
     await helpFriends()
     await $.wait(2000)
     await getHomeData(true)
-    await showMsg()
+    await showMsg()*/
   } catch (e) {
     $.logErr(e)
   }
@@ -159,7 +159,7 @@ function showMsg() {
   })
 }
 
-/*async function helpFriends() {
+async function helpFriends() {
   for (let code of $.newShareCodes) {
     if (!code) continue
     await getFriendData(code)
@@ -247,7 +247,7 @@ async function doTask() {
       }
     }
   }
-}*/
+}
 
 function getFeedDetail(body = {}) {
   return new Promise(resolve => {
@@ -425,7 +425,7 @@ function collectScore(taskId, itemId, actionType = null, inviteId = null, shopSi
                   console.log(`任务上报成功`)
                   await $.wait(10 * 1000)
                   if (data.data.result.taskToken) {
-                    await doTask2(data.data.result.taskToken)
+                    //await doTask2(data.data.result.taskToken)
                   }
                 }
                 // $.userInfo = data.data.result.userInfo;
@@ -443,7 +443,7 @@ function collectScore(taskId, itemId, actionType = null, inviteId = null, shopSi
     })
   })
 }
-/*
+
 function pkCollectScore(taskId, itemId, actionType = null, inviteId = null, shopSign = null) {
   let temp = {
     "taskId": taskId,
@@ -488,7 +488,7 @@ function pkCollectScore(taskId, itemId, actionType = null, inviteId = null, shop
                   console.log(`任务上报成功`)
                   await $.wait(10 * 1000)
                   if (data.data.result.taskToken) {
-                    await doTask2(data.data.result.taskToken)
+                    //await doTask2(data.data.result.taskToken)
                   }
                 }
                 // $.userInfo = data.data.result.userInfo;
@@ -535,7 +535,7 @@ function doTask2(taskToken) {
       }
     })
   })
-}*/
+}
 
 function raise(taskId = "nian_raise") {
   let temp = {
@@ -603,7 +603,7 @@ function getTaskList(body = {}) {
   })
 }
 
-/*function getFriendData(inviteId) {
+function getFriendData(inviteId) {
   return new Promise((resolve) => {
     $.post(taskPostUrl('nian_getHomeData', {"inviteId": inviteId}), async (err, resp, data) => {
       try {
@@ -653,7 +653,7 @@ function map() {
       }
     })
   })
-}*/
+}
 
 function queryMaterials() {
   let body = {
@@ -694,7 +694,7 @@ function queryMaterials() {
   })
 }
 
-/*function shopLotteryInfo(shopSign) {
+function shopLotteryInfo(shopSign) {
   let body = {"shopSign": shopSign}
   return new Promise(resolve => {
     $.post(taskPostUrl("nian_shopLotteryInfo", body, "nian_shopLotteryInfo"), async (err, resp, data) => {
@@ -732,7 +732,7 @@ function queryMaterials() {
               for (let i = 0; i < data.data.result.lotteryNum; ++i) {
                 console.log(`去抽奖：${i + 1}/${data.data.result.lotteryNum}`)
                 await $.wait(2000)
-                await doShopLottery(shopSign)
+                //await doShopLottery(shopSign)
               }
             }
           }
@@ -777,7 +777,7 @@ function doShopLottery(shopSign) {
       }
     })
   })
-}*/
+}
 
 function pkInfo() {
   return new Promise(resolve => {
@@ -820,7 +820,7 @@ function pkInfo() {
   })
 }
 
-/*function pkTaskStealDetail() {
+function pkTaskStealDetail() {
   return new Promise(resolve => {
     $.post(taskPostUrl("nian_pk_getStealForms", {}, "nian_pk_getStealForms"), async (err, resp, data) => {
       try {
@@ -837,7 +837,7 @@ function pkInfo() {
                 let item = data.data.result.stealGroups[i]
                 if (item.stolen === 0) {
                   console.log(`去偷${item.name}的红包`)
-                  await pkStealGroup(item.id)
+                  //await pkStealGroup(item.id)
                   await $.wait(2000)
                 }
               }
@@ -897,7 +897,7 @@ function pkTaskDetail() {
       }
     })
   })
-}*/
+}
 
 function pkAssignGroup(inviteId) {
   let temp = {
@@ -940,7 +940,7 @@ function pkAssignGroup(inviteId) {
   })
 }
 
-/*function pkStealGroup(stealId) {
+function pkStealGroup(stealId) {
   let temp = {
     "stealId": stealId,
   }
@@ -1148,7 +1148,6 @@ function shareCodesFormatPk() {
     resolve();
   })
 }
-*/
 
 function requireConfig() {
   return new Promise(resolve => {
@@ -1192,7 +1191,7 @@ function requireConfig() {
     resolve()
   })
 }
-/*
+
 function taskPostUrl(function_id, body = {}, function_id2) {
   let url = `${JD_API_HOST}`;
   if (function_id2) {
@@ -1209,7 +1208,7 @@ function taskPostUrl(function_id, body = {}, function_id2) {
       "User-Agent": $.isNode() ? (process.env.JD_USER_AGENT ? process.env.JD_USER_AGENT : (require('./USER_AGENTS').USER_AGENT)) : ($.getdata('JDUA') ? $.getdata('JDUA') : "jdapp;iPhone;9.2.2;14.2;%E4%BA%AC%E4%B8%9C/9.2.2 CFNetwork/1206 Darwin/20.1.0")
     }
   }
-}*/
+}
 
 function TotalBean() {
   return new Promise(async resolve => {
