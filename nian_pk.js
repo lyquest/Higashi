@@ -381,7 +381,7 @@ function collectProduceScore(taskId = "collectProducedCoin") {
   })
 }
 
-/*function collectScore(taskId, itemId, actionType = null, inviteId = null, shopSign = null) {
+function collectScore(taskId, itemId, actionType = null, inviteId = null, shopSign = null) {
   let temp = {
     "taskId": taskId,
     "rnd": getRnd(),
@@ -443,7 +443,7 @@ function collectProduceScore(taskId = "collectProducedCoin") {
     })
   })
 }
-
+/*
 function pkCollectScore(taskId, itemId, actionType = null, inviteId = null, shopSign = null) {
   let temp = {
     "taskId": taskId,
