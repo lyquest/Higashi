@@ -78,8 +78,8 @@ const pkInviteCodes = [
         }
         continue
       }
-      await shareCodesFormat();
-      await shareCodesFormatPk()
+      //await shareCodesFormat();
+      //await shareCodesFormatPk()
       await jdNian()
 	  await pkInfo()
     }
