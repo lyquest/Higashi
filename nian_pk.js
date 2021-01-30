@@ -81,7 +81,6 @@ const pkInviteCodes = [
       await shareCodesFormat();
       await shareCodesFormatPk()
       await jdNian()
-	  await pkInfo()
     }
   }
 })()
@@ -92,47 +91,7 @@ const pkInviteCodes = [
     $.done();
   })
 
-  function pkInfo() {
-  return new Promise(resolve => {
-    $.post(taskPostUrl("nian_pk_getHomeData", {}, "nian_pk_getHomeData"), async (err, resp, data) => {
-      try {
-        if (err) {
-          console.log(`${JSON.stringify(err)}`)
-          console.log(`${$.name} API请求失败，请检查网路重试`)
-        } else {
-          $.group = true
-          if (safeGet(data)) {
-            data = JSON.parse(data);
-            if (data.code === 0 && data.data && data.data.bizCode === 0) {
-              console.log(`\n您的好友PK助力码为${data.data.result.groupInfo.groupAssistInviteId}\n注：此pk邀请码每天都变！`)
-              let info = data.data.result.groupPkInfo
-              if (info.dayAward)
-                console.log(`白天关卡：${info.dayAward}元红包，完成进度 ${info.dayTotalValue}/${info.dayTargetSell}`)
-              else {
-                function secondToDate(result) {
-                  var h = Math.floor(result / 3600);
-                  var m = Math.floor((result / 60 % 60));
-                  var s = Math.floor((result % 60));
-                  return h + "小时" + m + "分钟" + s + "秒";
-                }
-
-                console.log(`守护关卡：${info.guardAward}元红包，剩余守护时间：${secondToDate(info.guardTime / 5)}`)
-              }
-            } else {
-              $.group = false
-              console.log(`获取组队信息失败，请检查`)
-            }
-          }
-        }
-      } catch (e) {
-        $.logErr(e, resp)
-      } finally {
-        resolve();
-      }
-    })
-  })
-}
-/*async function jdNian() {
+async function jdNian() {
   try {
     await getHomeData()
     if (!$.secretp) return
@@ -199,7 +158,7 @@ function showMsg() {
   })
 }
 
-async function helpFriends() {
+/*async function helpFriends() {
   for (let code of $.newShareCodes) {
     if (!code) continue
     await getFriendData(code)
@@ -287,7 +246,7 @@ async function doTask() {
       }
     }
   }
-}
+}*/
 
 function getFeedDetail(body = {}) {
   return new Promise(resolve => {
@@ -421,7 +380,7 @@ function collectProduceScore(taskId = "collectProducedCoin") {
   })
 }
 
-function collectScore(taskId, itemId, actionType = null, inviteId = null, shopSign = null) {
+/*function collectScore(taskId, itemId, actionType = null, inviteId = null, shopSign = null) {
   let temp = {
     "taskId": taskId,
     "rnd": getRnd(),
@@ -575,7 +534,7 @@ function doTask2(taskToken) {
       }
     })
   })
-}
+}*/
 
 function raise(taskId = "nian_raise") {
   let temp = {
@@ -643,7 +602,7 @@ function getTaskList(body = {}) {
   })
 }
 
-function getFriendData(inviteId) {
+/*function getFriendData(inviteId) {
   return new Promise((resolve) => {
     $.post(taskPostUrl('nian_getHomeData', {"inviteId": inviteId}), async (err, resp, data) => {
       try {
@@ -693,7 +652,7 @@ function map() {
       }
     })
   })
-}
+}*/
 
 function queryMaterials() {
   let body = {
@@ -734,7 +693,7 @@ function queryMaterials() {
   })
 }
 
-function shopLotteryInfo(shopSign) {
+/*function shopLotteryInfo(shopSign) {
   let body = {"shopSign": shopSign}
   return new Promise(resolve => {
     $.post(taskPostUrl("nian_shopLotteryInfo", body, "nian_shopLotteryInfo"), async (err, resp, data) => {
@@ -817,7 +776,7 @@ function doShopLottery(shopSign) {
       }
     })
   })
-}
+}*/
 
 function pkInfo() {
   return new Promise(resolve => {
@@ -860,7 +819,7 @@ function pkInfo() {
   })
 }
 
-function pkTaskStealDetail() {
+/*function pkTaskStealDetail() {
   return new Promise(resolve => {
     $.post(taskPostUrl("nian_pk_getStealForms", {}, "nian_pk_getStealForms"), async (err, resp, data) => {
       try {
@@ -937,7 +896,7 @@ function pkTaskDetail() {
       }
     })
   })
-}
+}*/
 
 function pkAssignGroup(inviteId) {
   let temp = {
@@ -980,7 +939,7 @@ function pkAssignGroup(inviteId) {
   })
 }
 
-function pkStealGroup(stealId) {
+/*function pkStealGroup(stealId) {
   let temp = {
     "stealId": stealId,
   }
