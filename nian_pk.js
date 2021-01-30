@@ -55,7 +55,7 @@ const pkInviteCodes = [
 'IgNWdiLGaPYCeJUfsq18UNi5ln9xEZSPRdOue8Wl3hJTS2SQzU0vulL0fHeULJaIfgqHFd7f_a4@IgNWdiLGaPYCeJUfsq18UNi5ln9xEZSPRdOue8Wl3hLRjZBAJLHzBpcl18AeskNYctp_9w'
 ]
 !(async () => {
-  await requireConfig();
+  //await requireConfig();
   if (!cookiesArr[0]) {
     $.msg($.name, '【提示】请先获取京东账号一cookie\n直接使用NobyDa的京东签到获取', 'https://bean.m.jd.com/bean/signIndex.action', {"open-url": "https://bean.m.jd.com/bean/signIndex.action"});
     return;
@@ -81,6 +81,7 @@ const pkInviteCodes = [
       await shareCodesFormat();
       await shareCodesFormatPk()
       await jdNian()
+	  await pkInfo()
     }
   }
 })()
