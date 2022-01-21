@@ -1,5 +1,5 @@
-
- const $ = new Env('activityUrl');
+ var TITLE = "activityUrl"
+ $ = new Env(TITLE);
  
  var hostMap = {
      // https://lzdz-isv.isvjcloud.com/dz/common/getSimpleActInfoVo
@@ -56,18 +56,18 @@
  }
  
  function doJdParams() {
-     var cookie = $request.headers["Referer"] || $request.headers["referer"];
-     if (cookie.match(/(https.+?)/)) {
-         cookie = cookie.match(/https.+activityId=\w+/);
+     var activityUrl = $request.headers["Referer"] || $request.headers["referer"];
+     if (activityUrl.match(/(https.+?)/)) {
+         activityUrl = activityUrl.match(/https.+activityId=\w+/);
      }else{
          return [];
      }
  
-     if (cookie == null || cookie == undefined || cookie == '') {
+     if (activityUrl == null || activityUrl == undefined || activityUrl == '') {
          return []
      }
  
-     $.msg(TITLE, "", `活动地址 \n${cookie}`);
+     $.msg(TITLE, "", `活动地址 \n${activityUrl}`);
  
  }
  
