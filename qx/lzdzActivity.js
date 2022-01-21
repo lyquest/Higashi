@@ -56,18 +56,18 @@
  }
  
  function doJdParams() {
-     var activityUrl = $request.headers["Referer"] || $request.headers["referer"];
-     if (activityUrl.match(/(https.+?)/)) {
-         activityUrl = activityUrl.match(/https.+activityId=\w+/);
+     var cookie = $request.headers["Referer"] || $request.headers["referer"];
+     if (cookie.match(/(https.+?)/)) {
+         cookie = cookie.match(/https.+activityId=\w+/);
      }else{
          return [];
      }
  
-     if (activityUrl == null || activityUrl == undefined || activityUrl == '') {
+     if (cookie == null || cookie == undefined || cookie == '') {
          return []
      }
  
-     $.msg(TITLE, "", `活动地址 \n${activityUrl}`);
+     $.msg(TITLE, "", `活动地址 \n${cookie}`);
  
  }
  
