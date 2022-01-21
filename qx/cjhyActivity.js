@@ -1,5 +1,5 @@
-
- const $ = new Env('activityUrl');
+ var TITLE = "activityUrl"
+ $ = new Env(TITLE);
  
  var hostMap = {
      // https://lzdz-isv.isvjcloud.com/dz/common/getSimpleActInfoVo
