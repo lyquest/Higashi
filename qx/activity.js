@@ -13,9 +13,9 @@
  !(async() => {
      try {
          if ($request && $request.headers) {
-             await getCookie()
+             await getActivityUrl()
          } else {
-             $.msg(TITLE, "", `${app.name} 未获取到Cookie`);
+             $.msg(TITLE, "", `${app.name} 未获取到activityUrl`);
          }
      } finally {
          $.done()
@@ -23,7 +23,7 @@
  })()
  
  
- async function getCookie() {
+ async function getActivityUrl() {
      let app = getApp();
  
      if (app == null || app === undefined) {
