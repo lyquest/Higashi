@@ -1,5 +1,5 @@
 
- const $ = new Env('activity');
+ const $ = new Env('activityUrl');
  
  var hostMap = {
      // https://lzdz-isv.isvjcloud.com/dz/common/getSimpleActInfoVo
@@ -56,7 +56,7 @@
  function doJdParams() {
      var activityUrl = $request.headers["Referer"] || $request.headers["referer"];
      if (activityUrl.match(/(https.+?)/)) {
-         activityUrl = activityUrl.match(/https.+activityId=\w+\d+/);
+         activityUrl = activityUrl.match(/https.+activityId=\w+/);
      }else{
          return [];
      }
