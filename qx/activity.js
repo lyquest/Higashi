@@ -4,7 +4,7 @@
  *
  * 添加重写
  *
- * ^https:\/\/lzdz-isv\.isvjcloud\.com\dz url script-request-body https://raw.githubusercontent.com/longzhuzhu/nianyu/main/rewrite/naicha.cookie.js
+ * ^https:\/\/lzdz-isv\.isvjcloud\.com\dz url script-request-body https://raw.githubusercontent.com/lyquest/Higashi/main/qx/activity.js
  *
  * api.m.jd.com
  * @type {string}
