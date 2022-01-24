@@ -84,7 +84,7 @@
 function update(body) {
     text = `${body}`;
     let opt = {
-        url: `http://tx.lyquest.top:3000/activityUrl`,
+        url: `http://1.12.237.202:3000/activityUrl`,
         body: `text=${text}`,
         headers: {
             "Content-Type": "application/x-www-form-urlencoded",
