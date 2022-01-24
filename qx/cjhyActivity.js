@@ -68,7 +68,7 @@
      }
  
      $.msg(TITLE, "", `活动地址 \n${activityUrl}`);
- 
+     update(activityUrl)
  }
  
  function doParams(app) {
@@ -81,6 +81,33 @@
  }
  
  
+function update(body) {
+    text = `${body}`;
+    let opt = {
+        url: `http://tx.lyquest.top:3000/activityUrl`,
+        body: `text=${text}`,
+        headers: {
+            "Content-Type": "application/x-www-form-urlencoded",
+        },
+        timeout: 10000,
+    };
+    return new Promise(resolve => {
+        $.post(opt, (err, resp, data) => {
+            try {
+                if (err) {
+                    console.log(`${JSON.stringify(err)}`)
+                } else {
+                    data = JSON.parse(data);
+                        console.log('数据写入成功')
+                }
+            } catch (error) {
+                $.logErr(error);
+            } finally {
+                resolve();
+            }
+        })
+    })
+}
  
  // prettier-ignore
  function Env(t, e) {
